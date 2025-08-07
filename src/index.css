@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark theme e-commerce design system */
+    --background: 222 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 84% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Neon brand colors */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 84% 4.9%;
+    --primary-glow: 217 91% 70%;
+
+    --secondary: 270 95% 75%;
+    --secondary-foreground: 222 84% 4.9%;
+    --secondary-glow: 270 95% 85%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+    --success-glow: 142 76% 46%;
+
+    --muted: 217 19% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 19% 18%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 19% 15%;
+    --input: 217 19% 18%;
+    --ring: 217 91% 60%;
+
+    /* Custom design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%), hsl(270 95% 75%));
+    --gradient-secondary: linear-gradient(135deg, hsl(270 95% 75%), hsl(217 91% 60%));
+    --gradient-dark: linear-gradient(135deg, hsl(222 84% 4.9%), hsl(217 19% 15%));
+    
+    --shadow-neon-primary: 0 0 30px hsl(217 91% 60% / 0.3);
+    --shadow-neon-secondary: 0 0 30px hsl(270 95% 75% / 0.3);
+    --shadow-glow: 0 10px 40px -10px hsl(217 91% 60% / 0.4);
+    
+    --animation-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animation-glow: glow 2s ease-in-out infinite alternate;
+    
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Already using dark theme as default */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background: linear-gradient(135deg, hsl(222 84% 4.9%), hsl(217 19% 8%));
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Hero button with neon glow */
+  .btn-hero {
+    @apply relative px-8 py-4 font-semibold text-lg rounded-xl overflow-hidden;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-neon-primary);
+    transition: all 0.3s ease;
+  }
+  
+  .btn-hero:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .btn-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-hero:hover::before {
+    left: 100%;
+  }
+
+  /* Pulse animation for CTAs */
+  .pulse-glow {
+    animation: var(--animation-pulse);
+  }
+  
+  /* Video thumbnail overlay */
+  .video-overlay {
+    @apply absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300;
+  }
+  
+  /* Stats animation */
+  .stat-bar {
+    @apply relative overflow-hidden bg-accent rounded-lg;
+  }
+  
+  .stat-fill {
+    @apply absolute left-0 top-0 h-full rounded-lg;
+    background: var(--gradient-primary);
+    animation: fillBar 2s ease-out forwards;
+  }
+  
+  /* Ticker animation */
+  .ticker {
+    animation: scroll 30s linear infinite;
+  }
+  
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: var(--shadow-neon-primary);
+  }
+  
+  .glow-secondary {
+    box-shadow: var(--shadow-neon-secondary);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .border-gradient {
+    border: 1px solid transparent;
+    background: linear-gradient(var(--background), var(--background)) padding-box,
+                var(--gradient-primary) border-box;
+  }
+}
+
+@keyframes fillBar {
+  from { width: 0%; }
+  to { width: var(--target-width, 100%); }
+}
+
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px hsl(217 91% 60% / 0.3); }
+  to { box-shadow: 0 0 40px hsl(217 91% 60% / 0.6); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
